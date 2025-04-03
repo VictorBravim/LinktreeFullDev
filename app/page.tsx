@@ -11,7 +11,7 @@ export default async function Home() {
       <header className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center">
           <Image
-            src="/images/logo.png"
+            src="/images/Logo.png"
             alt="Logo"
             width={40}
             height={40}

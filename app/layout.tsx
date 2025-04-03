@@ -6,8 +6,8 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "WhatsApp Groups Linktree",
-  description: "Discover and join WhatsApp groups",
+  title: "FullDev Groups",
+  description: "Fala, Dev! Seja muito Bem-vindo! 😆",
 }
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body className={inter.className}>{children}</body>
     </html>
   )
