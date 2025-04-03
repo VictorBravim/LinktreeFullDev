@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { Users, ExternalLink, AlertCircle } from "lucide-react";
-import type { WhatsAppGroup } from "@/lib/types";
+import { WhatsAppGroup } from "@/lib/ComunidadeApi";
 
-interface WhatsAppCardProps {
+interface WhatsAppGroupCardProps {
   group: WhatsAppGroup;
 }
 
-export default function WhatsAppGroupCard({ group }: WhatsAppCardProps) {
+export default function WhatsAppGroupCard({ group }: WhatsAppGroupCardProps) {
   const isFull = group.memberCount >= 1024;
 
   return (
@@ -14,7 +14,7 @@ export default function WhatsAppGroupCard({ group }: WhatsAppCardProps) {
       <div className="p-4 flex items-center gap-3">
         <div className="relative">
           <Image
-            src={group.imageUrl || "/images/Conversa1.png"}
+            src={group.imageUrl || "/images/FullDev.png"}
             alt={group.name}
             width={50}
             height={50}
@@ -37,12 +37,11 @@ export default function WhatsAppGroupCard({ group }: WhatsAppCardProps) {
           </div>
         </div>
       </div>
-
-      <div className="grid grid-cols-3 gap-2 mx-4">
+      <div className="grid grid-cols-3 gap-0.5">
         {group.recentImages.slice(0, 3).map((image, index) => (
           <div key={index} className="aspect-square relative">
             <Image
-              src={image.url || "/images/Conversa1.png"}
+              src={image.url || "/images/Logo.png"}
               alt={`Recent image ${index + 1}`}
               fill
               className="object-cover"
@@ -50,7 +49,6 @@ export default function WhatsAppGroupCard({ group }: WhatsAppCardProps) {
           </div>
         ))}
       </div>
-
       <div className="p-4">
         <a
           href={group.inviteLink}

@@ -1,102 +1,136 @@
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import WhatsAppGroupCard from "@/components/WhatsappCard";
-import { getWhatsAppGroups } from "@/lib/WhatsappApi";
+import { Users, Calendar } from "lucide-react";
+import SocialGrid from "@/components/SocialGrid";
+import SocialCard from "@/components/SocialCard";
+import CommunityCardWithDropdown from "@/components/Dropdown";
+import { getCommunityData, getWhatsAppGroups } from "@/lib/ComunidadeApi";
+import VideoPlayer from "@/components/VideoPlayer";
 
 export default async function Home() {
-  const groups = await getWhatsAppGroups();
+  const communityData = await getCommunityData();
+  const whatsappGroups = await getWhatsAppGroups();
+
+  const socialMedia = communityData.socialMedia;
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <header className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <Image
-            src="/images/Logo.png"
-            alt="Logo"
-            width={40}
-            height={40}
-            className="mr-2"
-          />
-          <span className="font-bold text-xl">FullDev</span>
-        </div>
-        <nav className="hidden md:flex items-center space-x-8">
-          <a
-            href="#"
-            className="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded-md transition-colors"
-          >
-            Área da administração
-          </a>
-        </nav>
-        <button className="md:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </header>
-
-      <section className="container mx-auto px-4 py-16 md:py-24 text-center relative">
-        <div className="absolute inset-0 opacity-5 z-0"></div>
-        <div className="relative z-10">
-          <div className="inline-block mb-4">
-            <span className="bg-orange-600 text-white px-3 py-1 rounded-md text-sm">
-              Comunidade
-            </span>
-            <a
-              href="#"
-              className="text-gray-400 ml-2 text-sm hover:text-orange-500 inline-flex items-center"
-            >
-              Para Devs <ArrowRight className="ml-1 w-4 h-4" />
-            </a>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-4">
-            COMUNIDADE <span className="text-orange-600">FULLDEV</span>
-          </h1>
-          <h2 className="text-3xl md:text-5xl font-bold mb-12 text-gray-300">
-            BY DEVS, FOR DEVS.
-          </h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="https://discord.com/invite/2vMkX7kc8t"
-              className="bg-orange-600 hover:bg-orange-700 px-6 py-3 rounded-md transition-colors font-medium"
-            >
-              Discord
-            </a>
-            <a
-              href="https://www.linkedin.com/company/comunidadefulldev"
-              className="border border-white hover:bg-white/10 px-6 py-3 rounded-md transition-colors font-medium flex items-center"
-            >
-              Linkedin <ArrowRight className="ml-2 w-4 h-4" />
-            </a>
+      <div className="max-w-7xl mx-auto">
+        <div className="p-4 sm:p-6 md:p-10">
+          <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-6">
+            <div className="flex flex-row sm:items-start gap-4">
+              <img
+                src="/images/FullDev.png"
+                alt="Logo"
+                className="w-20 h-20 sm:w-24 sm:h-24 md:w-40 md:h-40 rounded-md flex-shrink-0"
+              />
+              <div className="flex-1">
+                <h1 className="text-xl sm:text-2xl md:text-4xl font-bold">
+                  FullDev
+                </h1>
+                <div className="flex items-center text-xs sm:text-sm md:text-base text-gray-400 mt-2">
+                  <Users className="w-4 h-4 mr-1" />
+                  <span>{communityData.memberCount} Membros</span>
+                </div>
+                <div className="flex items-center text-xs sm:text-sm md:text-base text-gray-400 mt-1">
+                  <Calendar className="w-4 h-4 mr-1" />
+                  <span>Criada em {communityData.foundedYear}</span>
+                </div>
+                <div className="mt-4 text-xs sm:text-sm md:text-base text-gray-300 break-words">
+                  <p>{communityData.description}</p>
+                </div>
+              </div>
+            </div>
+            <VideoPlayer />
           </div>
         </div>
-      </section>
 
-      <section id="groups" className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8">Grupos WhatsApp</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {groups.map((group) => (
-            <WhatsAppGroupCard key={group.id} group={group} />
-          ))}
-        </div>
-      </section>
+        <div className="grid md:grid-cols-12 gap-4 p-4 sm:p-6 md:p-10">
+          <div className="md:col-span-8 space-y-4 sm:space-y-6">
+            <CommunityCardWithDropdown
+              groups={whatsappGroups}
+              totalGroups={communityData.groups.total}
+            />
+            <div className="border border-zinc-800 rounded-lg p-4 sm:p-6 bg-zinc-900/50 hover:border-orange-600 transition-colors">
+              <div className="flex items-center gap-4">
+                <img
+                  src="/images/FullDev.png"
+                  alt="Logo"
+                  className="w-12 h-12 bg-zinc-800 rounded-full"
+                />
+                <div>
+                  <h2 className="font-medium text-lg sm:text-xl">
+                    Próximo hackathon
+                  </h2>
+                  <div className="flex items-center text-xs sm:text-sm text-gray-400 mt-1">
+                    <span className="w-2 h-2 bg-orange-600 rounded-full mr-2"></span>
+                    <span>Em construção</span>
+                  </div>
+                </div>
+              </div>
+              <button className="w-full mt-4 sm:mt-6 bg-zinc-800 text-gray-500 py-2 sm:py-3 px-4 rounded-md flex items-center justify-center cursor-not-allowed">
+                desabilitado
+              </button>
+            </div>
+            <div className="border border-zinc-800 rounded-lg p-4 sm:p-6 bg-zinc-900/50 hover:border-orange-600 transition-colors">
+              <div className="flex items-center gap-4">
+                <img
+                  src="/images/FullDev.png"
+                  alt="Logo"
+                  className="w-12 h-12 bg-zinc-800 rounded-full"
+                />
+                <div>
+                  <h2 className="font-medium text-lg sm:text-xl">
+                    Último Aviso
+                  </h2>
+                  <div className="text-xs sm:text-sm text-gray-400 mt-1">
+                    03/04/25
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 text-sm sm:text-base text-gray-300">
+                <p>{communityData.latestAnnouncement.text}</p>
+              </div>
+              <img
+                src="/images/Aviso.png"
+                alt="Logo"
+                className="mt-4 sm:mt-6 w-full h-60 sm:h-125 bg-zinc-800 rounded-md"
+              />
+            </div>
+          </div>
 
-      <footer className="bg-zinc-900 py-8">
-        <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© 2025 FullDev. Todos os direitos reservados.</p>
+          <div className="md:col-span-4 space-y-4 sm:space-y-6">
+            {socialMedia.length > 0 && (
+              <SocialGrid
+                handle={socialMedia[0].handle}
+                followers={socialMedia[0].followers}
+                imageUrl={socialMedia[0].imageUrl}
+                url={socialMedia[0].links[0].url}
+                recentImages={socialMedia[0].recentImages || []}
+              />
+            )}
+
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
+              {socialMedia.slice(1, 4).map((social, index) => (
+                <SocialCard
+                  key={index}
+                  handle={social.handle}
+                  followers={social.followers}
+                  imageUrl={social.imageUrl}
+                  url={social.links[0].url}
+                />
+              ))}
+            </div>
+            <img
+              src="/images/Meme.png"
+              alt="Logo"
+              className="w-full h-72 sm:h-60 bg-zinc-800 rounded-lg"
+            />
+          </div>
         </div>
-      </footer>
+
+        <div className="mt-6 sm:mt-10 bg-zinc-900 py-3 sm:py-4 text-center text-xs sm:text-sm text-gray-400">
+          Todos os direitos reservados a FullDev - 2025
+        </div>
+      </div>
     </main>
   );
 }
