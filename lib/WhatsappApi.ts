@@ -53,7 +53,7 @@ export async function getWhatsAppGroups(): Promise<WhatsAppGroup[]> {
       description: "",
       imageUrl: "/images/CodeQueens.png",
       memberCount: 504,
-      inviteLink: "https://chat.whatsapp.com/example2",
+      inviteLink: "https://chat.whatsapp.com/KOKFfsXGD1PBVWvAXXNbcb",
       recentImages: [
         {
           url: "/images/Conversa1.png",

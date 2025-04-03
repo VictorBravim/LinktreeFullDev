@@ -68,16 +68,16 @@ export default async function Home() {
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="#groups"
+              href="https://discord.com/invite/2vMkX7kc8t"
               className="bg-orange-600 hover:bg-orange-700 px-6 py-3 rounded-md transition-colors font-medium"
             >
-              Ver Grupos
+              Discord
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/company/comunidadefulldev"
               className="border border-white hover:bg-white/10 px-6 py-3 rounded-md transition-colors font-medium flex items-center"
             >
-              Ver hackatons <ArrowRight className="ml-2 w-4 h-4" />
+              Linkedin <ArrowRight className="ml-2 w-4 h-4" />
             </a>
           </div>
         </div>
